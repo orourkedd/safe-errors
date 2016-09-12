@@ -4,12 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha index.spec.js"
+    "test": "mocha ./src/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.4.6",
     "mocha": "^3.0.2"
+  },
+  "standard": {
+    "globals": [
+      "it",
+      "describe",
+      "beforeEach",
+      "afterEach",
+      "before",
+      "after"
+    ]
   }
 }
