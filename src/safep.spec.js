@@ -13,7 +13,7 @@ describe('safe promise', () => {
     })
   })
 
-  it('should catch errors and convert them', () => {
+  it('should return reject promise result', () => {
     let error = new Error('something bad!')
     let p = () => {
       return Promise.reject(error)
