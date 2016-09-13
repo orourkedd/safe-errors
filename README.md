@@ -27,7 +27,7 @@ try {
 ```
 const { safep } = require('safe-errors')
 let getResult = await safep(getUser)('http://www.example.com/api/v1/users/123')
-if (getResult.error) {
+if (getResult.success === false) {
   log(getResult.error)
   //  handle error in some way
 }
@@ -36,7 +36,7 @@ let user = getResult.payload
 user.name = 'New Name'
 
 let saveResult = await safep(saveUser)('http://www.example.com/api/v1/users/123', user)
-if (saveResult.error) {
+if (saveResult.success === false) {
   log(saveResult.error)
   //  handle error in some way
 }
@@ -45,7 +45,7 @@ if (saveResult.error) {
 
 #### Even Better Safe Way
 ```
-const { pipeP } = require('ramda')
+const { pipeP, merge } = require('ramda')
 const { safep } = require('safe-errors')
 
 const getUserP = () => safep(getUser)('http://www.example.com/api/v1/users/123')
@@ -64,10 +64,11 @@ const handleError = (result) => {
 
   return result.payload
 }
-let userUpdateResult = pipeP(getUserP, handleError, updateUser, saveUser, handleError)
+let updateAndSaveUser = pipeP(getUserP, handleError, updateUser, saveUser, handleError)
+let updateResult = await updateAndSaveUser()
 
-if (userUpdateResult.error) {
-  log(userUpdateResult.error)
+if (updateResult.success === false) {
+  log(updateResult.error)
 }
 ```
 
