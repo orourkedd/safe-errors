@@ -69,6 +69,8 @@ const handleError = (result) => {
 
   return result.payload
 }
+
+// Easier to pipe when errors are predictable
 let updateAndSaveUser = pipeP(getUserP, handleError, updateUser, saveUser, handleError)
 let updateResult = await updateAndSaveUser()
 
