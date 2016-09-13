@@ -1,4 +1,4 @@
-const { safep } = require('./safep')
+const { safep } = require('../index')
 const deep = require('assert').deepEqual
 
 describe('safe promise', () => {

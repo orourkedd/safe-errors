@@ -1,5 +1,7 @@
-const { safecb } = require('./src/safecb')
+const { safecb } = require('./lib/safecb')
+const { safep } = require('./lib/safep')
 
 module.exports = {
-  safecb
+  safecb,
+  safep
 }

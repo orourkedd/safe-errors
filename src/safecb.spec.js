@@ -1,4 +1,4 @@
-const { safecb } = require('./safecb')
+const { safecb } = require('../index')
 const deep = require('assert').deepEqual
 
 describe('safe callback', () => {
