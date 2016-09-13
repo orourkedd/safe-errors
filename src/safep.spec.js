@@ -12,4 +12,16 @@ describe('safe promise', () => {
       deep(result.payload[0], 'a')
     })
   })
+
+  it('should catch errors and convert them', () => {
+    let error = new Error('something bad!')
+    let p = () => {
+      return Promise.reject(error)
+    }
+
+    return safep(p)().then((result) => {
+      deep(result.success, false)
+      deep(result.error, error)
+    })
+  })
 })
