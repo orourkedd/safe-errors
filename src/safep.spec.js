@@ -1,4 +1,4 @@
-const { safep } = require('../index')
+const { safep } = require('./safep')
 const deep = require('assert').deepEqual
 
 describe('safe promise', () => {
@@ -9,7 +9,7 @@ describe('safe promise', () => {
 
     return safep(p)().then((result) => {
       deep(result.success, true)
-      deep(result.payload[0], 'a')
+      deep(result.payload, 'a')
     })
   })
 

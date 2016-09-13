@@ -100,5 +100,6 @@ if (result.error) {
   log(result.error)
   //  handle error in some way
 }
-console.log(result.payload[0])
+console.log(result.payload) // contents of file
+console.log(result.args) // array of arguments passed into done callback
 ```

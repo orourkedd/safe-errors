@@ -1,15 +1,16 @@
-const { safecb } = require('../index')
+const { safecb } = require('./safecb')
 const deep = require('assert').deepEqual
 
 describe('safe callback', () => {
   it('should convert a callback to a promise', () => {
     let cb = (a, b, done) => {
-      done(null, 'a')
+      done(null, '1')
     }
 
     return safecb(cb)('a', 'b').then((result) => {
       deep(result.success, true)
-      deep(result.payload[0], 'a')
+      deep(result.payload, '1')
+      deep(result.args, ['1'])
     })
   })
 

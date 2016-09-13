@@ -18,7 +18,8 @@ function safecb (fn, ctx) {
 
         resolve({
           success: true,
-          payload: doneArgs
+          payload: doneArgs[0],
+          args: doneArgs
         })
       }
 
