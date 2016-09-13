@@ -62,7 +62,7 @@ const updateUser = (user) => {
 const saveUserP = (user) => safep(saveUser)('http://www.example.com/api/v1/users/123', user)
 const handleError = (result) => {
   if (result.success === false) {
-    log(result.error)
+    log(result.success === false)
     // maybe return a default
     return {}
   }
