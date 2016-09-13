@@ -1,5 +1,5 @@
 # Safe Errors
-In my opinion its simpler to handle errors just like I handle everything else.
+In my opinion its simpler to handle errors just like I handle everything else.  Normally errors are handled on a separate codepath. This module helps normalize the codepath for the return values (including errors) from async functions.
 
 ## Promise Example
 #### Normal Way
