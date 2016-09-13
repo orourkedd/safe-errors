@@ -1,28 +1,74 @@
 # Safe Errors
-In my opinion its simpler to handle errors just like I handle everything else.  Normally errors are handled on a separate codepath. This module helps normalize the codepath for the return values (including errors) from async functions.
+In my opinion its simpler to handle errors just like I handle everything else.  Normally, errors are handled on a separate codepath. This module helps normalize the codepath for the return values (including errors) from asynchronous functions.
 
 ## Promise Example
 #### Normal Way
 ```
-let response
+let user
 try {
-  response = await getUsers('http://www.example.com/api/v1/users')
+  user = await getUser('http://www.example.com/api/v1/users/123')
 } catch (e) {
   log(e)
   //  handle error in some way
 }
-console.log(response)
+
+user.name = 'New Name'
+
+let postResponse
+try {
+  postResponse = await saveUser('http://www.example.com/api/v1/users/123')
+} catch (e) {
+  log(e)
+  //  handle error in some way
+}
 ```
 
 #### Safe Way
 ```
 const { safep } = require('safe-errors')
-let result = await safep(getUsers)('http://www.example.com/api/v1/users')
-if (result.error) {
-  log(result.error)
+let getResult = await safep(getUser)('http://www.example.com/api/v1/users/123')
+if (getResult.error) {
+  log(getResult.error)
   //  handle error in some way
 }
-console.log(result.payload)
+
+let user = getResult.payload
+user.name = 'New Name'
+
+let saveResult = await safep(saveUser)('http://www.example.com/api/v1/users/123', user)
+if (saveResult.error) {
+  log(saveResult.error)
+  //  handle error in some way
+}
+
+```
+
+#### Even Better Safe Way
+```
+const { pipeP } = require('ramda')
+const { safep } = require('safe-errors')
+
+const getUserP = () => safep(getUser)('http://www.example.com/api/v1/users/123')
+const updateUser = (user) => {
+  return merge(user, {
+    name: 'New name'
+  })
+}
+const saveUserP = (user) => safep(saveUser)('http://www.example.com/api/v1/users/123', user)
+const handleError = (result) => {
+  if (result.success === false) {
+    log(result.error)
+    // maybe return a default
+    return {}
+  }
+
+  return result.payload
+}
+let userUpdateResult = pipeP(getUserP, handleError, updateUser, saveUser, handleError)
+
+if (userUpdateResult.error) {
+  log(userUpdateResult.error)
+}
 ```
 
 ## Callback Example
