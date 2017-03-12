@@ -1,4 +1,5 @@
 const Promise = require('bluebird')
+const { success, failure } = require('simple-protocol-helpers')
 
 function safecb (fn, ctx) {
   return function () {
@@ -8,29 +9,14 @@ function safecb (fn, ctx) {
         let doneArgs = [].slice.call(arguments)
         let error = doneArgs.shift()
 
-        if (error) {
-          resolve({
-            success: false,
-            error
-          })
-          return
-        }
+        if (error) return resolve(failure(error))
 
-        resolve({
-          success: true,
-          payload: doneArgs[0],
-          args: doneArgs
-        })
+        resolve(success(doneArgs[0], { args: doneArgs}))
       }
 
       args.push(done)
       fn.apply(ctx, args)
-    }).catch((error) => {
-      return {
-        success: false,
-        error
-      }
-    })
+    }).catch(failure)
   }
 }
 

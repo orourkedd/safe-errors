@@ -1,3 +1,4 @@
+const { errorToObject } = require('simple-protocol-helpers')
 const { safecb } = require('./safecb')
 const deep = require('assert').deepEqual
 
@@ -33,7 +34,7 @@ describe('safe callback', () => {
 
     return safecb(cb)('a', 'b').then((result) => {
       deep(result.success, false)
-      deep(result.error, error)
+      deep(result.error, errorToObject(error))
     })
   })
 
@@ -46,7 +47,7 @@ describe('safe callback', () => {
 
     return safecb(cb)('a', 'b').then((result) => {
       deep(result.success, false)
-      deep(result.error, error)
+      deep(result.error, errorToObject(error))
     })
   })
 })

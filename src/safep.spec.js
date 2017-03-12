@@ -1,3 +1,4 @@
+const { errorToObject } = require('simple-protocol-helpers')
 const { safep } = require('./safep')
 const deep = require('assert').deepEqual
 
@@ -21,7 +22,7 @@ describe('safe promise', () => {
 
     return safep(p)().then((result) => {
       deep(result.success, false)
-      deep(result.error, error)
+      deep(result.error, errorToObject(error))
     })
   })
 })
