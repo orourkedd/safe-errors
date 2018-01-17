@@ -1,7 +1,7 @@
-const safecb = require('./lib/safecb').safecb
-const safep = require('./lib/safep').safep
+var safecb = require("./lib/safecb").safecb;
+var safep = require("./lib/safep").safep;
 
 module.exports = {
   safecb: safecb,
   safep: safep
-}
+};

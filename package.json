@@ -1,6 +1,6 @@
 {
   "name": "safe-errors",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,13 +20,6 @@
     "mocha": "^3.0.2"
   },
   "standard": {
-    "globals": [
-      "it",
-      "describe",
-      "beforeEach",
-      "afterEach",
-      "before",
-      "after"
-    ]
+    "globals": ["it", "describe", "beforeEach", "afterEach", "before", "after"]
   }
 }
